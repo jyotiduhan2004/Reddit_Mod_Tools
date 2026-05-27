@@ -14,7 +14,7 @@ import { Tooltip } from './Tooltip';
 
 ChartJS.register(CategoryScale, LinearScale, BarElement, LineElement, PointElement, ChartTooltip, Filler);
 
-const MOD_COLORS = ['#FF4500', '#24A0ED', '#46D160', '#FFB000', '#7193FF', '#FF6AC1', '#00D5AB', '#FF585B'];
+const MOD_COLORS = ['#FF4500', '#24A0ED', '#46D160', '#FFB000', '#7193FF', '#FF6AC1', '#00D5AB', '#CC4545'];
 
 function timeAgo(ts: number): string {
   const diff = Date.now() - ts;
@@ -27,7 +27,7 @@ function timeAgo(ts: number): string {
 }
 
 const SEVERITY_STYLES = {
-  critical: 'border-l-[#FF585B] bg-[#FF585B]/10',
+  critical: 'border-l-[#CC4545] bg-[#CC4545]/10',
   warning: 'border-l-[#FFB000] bg-[#FFB000]/10',
   info: 'border-l-[#24A0ED] bg-[#24A0ED]/10',
 };
@@ -72,7 +72,7 @@ export function RuleAutopsy({ data, onBack }: { data: AutopsyData; onBack: () =>
       {
         label: 'Overrides',
         data: data.trendPoints.map((p) => p.overrides),
-        borderColor: '#FF585B',
+        borderColor: '#CC4545',
         backgroundColor: 'rgba(255,88,91,0.1)',
         fill: true,
         tension: 0.3,
@@ -90,8 +90,8 @@ export function RuleAutopsy({ data, onBack }: { data: AutopsyData; onBack: () =>
     },
   };
 
-  const stdDevColor = data.consistencyStdDev <= 5 ? 'text-[#46D160]' : data.consistencyStdDev <= 10 ? 'text-[#FFB000]' : 'text-[#FF585B]';
-  const stdDevBg = data.consistencyStdDev <= 5 ? 'bg-[#46D160]/15' : data.consistencyStdDev <= 10 ? 'bg-[#FFB000]/15' : 'bg-[#FF585B]/15';
+  const stdDevColor = data.consistencyStdDev <= 5 ? 'text-[#46D160]' : data.consistencyStdDev <= 10 ? 'text-[#FFB000]' : 'text-[#CC4545]';
+  const stdDevBg = data.consistencyStdDev <= 5 ? 'bg-[#46D160]/15' : data.consistencyStdDev <= 10 ? 'bg-[#FFB000]/15' : 'bg-[#CC4545]/15';
 
   return (
     <div>
@@ -105,7 +105,7 @@ export function RuleAutopsy({ data, onBack }: { data: AutopsyData; onBack: () =>
         <div className="flex-1">
           <div className="flex items-center gap-2">
             <h2 className="text-base font-bold text-[#D7DADC]">{data.rule}</h2>
-            <span className={`text-xs px-2 py-0.5 rounded-full font-medium ${data.healthy ? 'bg-[#46D160]/15 text-[#46D160]' : 'bg-[#FF585B]/15 text-[#FF585B]'}`}>
+            <span className={`text-xs px-2 py-0.5 rounded-full font-medium ${data.healthy ? 'bg-[#46D160]/15 text-[#46D160]' : 'bg-[#CC4545]/15 text-[#CC4545]'}`}>
               {data.healthy ? 'Healthy' : 'Needs Attention'}
             </span>
           </div>
@@ -122,13 +122,13 @@ export function RuleAutopsy({ data, onBack }: { data: AutopsyData; onBack: () =>
         <div className="grid grid-cols-2 gap-2">
           <StatMini label="Removals" value={data.removals} color="text-[#FF4500]" />
           <StatMini label="Approvals" value={data.approvals} color="text-[#24A0ED]" />
-          <StatMini label="Overrides" value={data.overrides} color="text-[#FF585B]" />
-          <StatMini label="Override %" value={`${overridePct}%`} color={overridePct > 25 ? 'text-[#FF585B]' : 'text-[#46D160]'} />
+          <StatMini label="Overrides" value={data.overrides} color="text-[#CC4545]" />
+          <StatMini label="Override %" value={`${overridePct}%`} color={overridePct > 25 ? 'text-[#CC4545]' : 'text-[#46D160]'} />
         </div>
       </div>
 
       {data.impactPct > 0 && !data.healthy && (
-        <div className="bg-[#FF585B]/10 border border-[#FF585B]/30 rounded-lg p-3 mb-4 text-sm text-[#FF585B]">
+        <div className="bg-[#CC4545]/10 border border-[#CC4545]/30 rounded-lg p-3 mb-4 text-sm text-[#CC4545]">
           Accounts for <span className="font-bold">{data.impactPct}%</span> of all overrides — fix this rule first for maximum impact
         </div>
       )}

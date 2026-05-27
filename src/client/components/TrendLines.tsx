@@ -13,7 +13,7 @@ import type { TrendData } from '../../shared/api';
 ChartJS.register(CategoryScale, LinearScale, PointElement, LineElement, Tooltip, Legend);
 
 const COLORS = [
-  '#FF4500', '#24A0ED', '#46D160', '#FF585B', '#FFB000', '#7193FF', '#FF6AC1', '#00D5AB',
+  '#FF4500', '#24A0ED', '#46D160', '#CC4545', '#FFB000', '#7193FF', '#FF6AC1', '#00D5AB',
 ];
 
 export function TrendLines({ data, onSelectRule }: { data: TrendData[]; onSelectRule?: (rule: string) => void }) {

@@ -26,14 +26,14 @@ function Splash() {
       ? 'text-[#46D160]'
       : healthScore >= 60
         ? 'text-[#FFB000]'
-        : 'text-[#FF585B]';
+        : 'text-[#CC4545]';
 
   const ringColor =
     healthScore >= 80
       ? 'border-[#46D160]'
       : healthScore >= 60
         ? 'border-[#FFB000]'
-        : 'border-[#FF585B]';
+        : 'border-[#CC4545]';
 
   if (loading) {
     return (

@@ -40,7 +40,7 @@ function Dashboard() {
   if (error) {
     return (
       <div className="flex items-center justify-center min-h-screen bg-white dark:bg-[#1A1A1B]">
-        <div className="text-[#FF585B] text-sm text-center p-4">
+        <div className="text-[#CC4545] text-sm text-center p-4">
           <p className="font-semibold mb-1">Error loading dashboard</p>
           <p className="text-xs">{error}</p>
         </div>
@@ -52,7 +52,7 @@ function Dashboard() {
 
   return (
     <div className="min-h-screen bg-white dark:bg-[#1A1A1B] text-gray-900 dark:text-[#D7DADC]">
-      <div className="max-w-3xl mx-auto px-4 py-4">
+      <div className="max-w-6xl mx-auto px-4 py-4">
         <div className="flex items-center gap-2 mb-4">
           <div className="w-8 h-8 bg-[#FF4500] rounded-lg flex items-center justify-center text-white font-bold text-sm">
             RF
@@ -96,7 +96,7 @@ function Dashboard() {
             <RuleAutopsy data={autopsy} onBack={clearAutopsy} />
           ) : (
             <div className="text-center py-8">
-              <p className="text-sm text-[#FF585B]">Failed to load autopsy data</p>
+              <p className="text-sm text-[#CC4545]">Failed to load autopsy data</p>
               <button onClick={clearAutopsy} className="text-xs text-[#818384] mt-2 underline">Go back</button>
             </div>
           )

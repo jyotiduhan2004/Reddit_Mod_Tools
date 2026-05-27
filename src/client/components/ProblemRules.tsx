@@ -15,7 +15,7 @@ export function ProblemRules({ data, onSelectRule }: { data: ProblemRule[]; onSe
 
       {flagged.length > 0 && (
         <div className="mb-4">
-          <div className="text-xs font-semibold text-[#FF585B] mb-2 uppercase tracking-wide">
+          <div className="text-xs font-semibold text-[#CC4545] mb-2 uppercase tracking-wide">
             Needs Attention
           </div>
           {flagged.map((rule) => (
@@ -78,14 +78,14 @@ function RuleCard({ rule, onSelectRule }: { rule: ProblemRule; onSelectRule?: (r
     <div
       className={`rounded-lg p-3 mb-2 border ${
         rule.flagged
-          ? 'border-[#FF585B]/30 bg-[#FF585B]/10'
+          ? 'border-[#CC4545]/30 bg-[#CC4545]/10'
           : 'border-[#343536] bg-[#272729]'
       }`}
     >
       <div className="flex items-start justify-between">
         <div className="flex items-center gap-2">
           {rule.flagged && (
-            <span className="bg-[#FF585B] text-white text-xs font-bold rounded-full px-2 py-0.5">!</span>
+            <span className="bg-[#CC4545] text-white text-xs font-bold rounded-full px-2 py-0.5">!</span>
           )}
           <span
             className="font-medium text-sm text-[#D7DADC] cursor-pointer hover:underline hover:text-[#FF4500]"
@@ -94,14 +94,14 @@ function RuleCard({ rule, onSelectRule }: { rule: ProblemRule; onSelectRule?: (r
             {rule.rule}
           </span>
         </div>
-        <span className={`text-xs font-mono ${rule.flagged ? 'text-[#FF585B]' : 'text-[#818384]'}`}>
+        <span className={`text-xs font-mono ${rule.flagged ? 'text-[#CC4545]' : 'text-[#818384]'}`}>
           {overridePct}% override
           <Tooltip text="Percentage of removals later approved by another mod" />
         </span>
       </div>
 
       {rule.flagged && rule.impactPct > 0 && (
-        <div className="mt-1 text-xs font-semibold text-[#FF585B]">
+        <div className="mt-1 text-xs font-semibold text-[#CC4545]">
           Fix first — {rule.impactPct}% of all overrides
         </div>
       )}
@@ -149,7 +149,7 @@ function RuleCard({ rule, onSelectRule }: { rule: ProblemRule; onSelectRule?: (r
               discussionSent
                 ? 'bg-[#46D160]/15 text-[#46D160]'
                 : discussionError
-                  ? 'bg-[#FF585B]/15 text-[#FF585B]'
+                  ? 'bg-[#CC4545]/15 text-[#CC4545]'
                   : 'bg-[#24A0ED] text-white hover:bg-[#1a8cd8]'
             }`}
           >

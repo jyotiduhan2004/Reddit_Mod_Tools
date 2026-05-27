@@ -11,10 +11,10 @@ import { Tooltip } from './Tooltip';
 
 ChartJS.register(CategoryScale, LinearScale, BarElement, ChartTooltip);
 
-const BAR_COLORS = ['#FF4500', '#24A0ED', '#46D160', '#FFB000', '#7193FF', '#FF6AC1', '#00D5AB', '#FF585B'];
+const BAR_COLORS = ['#FF4500', '#24A0ED', '#46D160', '#FFB000', '#7193FF', '#FF6AC1', '#00D5AB', '#CC4545'];
 
 function burnoutBadge(pct: number) {
-  if (pct > 40) return { label: 'High Load', cls: 'bg-[#FF585B]/15 text-[#FF585B]' };
+  if (pct > 40) return { label: 'High Load', cls: 'bg-[#CC4545]/15 text-[#CC4545]' };
   if (pct > 30) return { label: 'Moderate', cls: 'bg-[#FFB000]/15 text-[#FFB000]' };
   return { label: 'Balanced', cls: 'bg-[#46D160]/15 text-[#46D160]' };
 }

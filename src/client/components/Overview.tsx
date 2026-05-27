@@ -27,7 +27,7 @@ function StatCard({ label, value, color, tooltip }: { label: string; value: stri
 function healthColor(score: number): string {
   if (score >= 80) return 'bg-[#46D160]/15 text-[#46D160]';
   if (score >= 60) return 'bg-[#FFB000]/15 text-[#FFB000]';
-  return 'bg-[#FF585B]/15 text-[#FF585B]';
+  return 'bg-[#CC4545]/15 text-[#CC4545]';
 }
 
 export function Overview({ stats, onSelectRule }: { stats: OverviewStats; onSelectRule?: (rule: string) => void }) {
@@ -60,7 +60,7 @@ export function Overview({ stats, onSelectRule }: { stats: OverviewStats; onSele
         <StatCard label="Health Score" value={stats.healthScore} color={healthColor(stats.healthScore)} tooltip="0-100 score based on overall override rate. Higher is better." />
         <StatCard label="Total Actions" value={stats.totalActions} color="bg-[#24A0ED]/15 text-[#24A0ED]" tooltip="Total removals + approvals this month" />
         <StatCard label="Removals" value={stats.totalRemovals} color="bg-[#FF4500]/15 text-[#FF4500]" tooltip="Content removed by mods under any rule" />
-        <StatCard label="Overrides" value={stats.totalOverrides} color="bg-[#FF585B]/15 text-[#FF585B]" tooltip="Removals later approved by another mod" />
+        <StatCard label="Overrides" value={stats.totalOverrides} color="bg-[#CC4545]/15 text-[#CC4545]" tooltip="Removals later approved by another mod" />
       </div>
 
       <h3 className="text-sm font-semibold text-[#818384] mb-2">

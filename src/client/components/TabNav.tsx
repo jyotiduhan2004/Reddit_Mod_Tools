@@ -32,7 +32,7 @@ export function TabNav({
         >
           {tab.label}
           {tab.id === 'problems' && problemCount > 0 && (
-            <span className="ml-1 bg-[#FF585B] text-white text-xs rounded-full px-1.5 py-0.5">
+            <span className="ml-1 bg-[#CC4545] text-white text-xs rounded-full px-1.5 py-0.5">
               {problemCount}
             </span>
           )}

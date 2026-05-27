@@ -13,7 +13,7 @@ import { Tooltip } from './Tooltip';
 ChartJS.register(CategoryScale, LinearScale, BarElement, ChartTooltip, Legend);
 
 const MOD_COLORS = [
-  '#FF4500', '#24A0ED', '#46D160', '#FF585B', '#FFB000', '#7193FF', '#FF6AC1', '#00D5AB',
+  '#FF4500', '#24A0ED', '#46D160', '#CC4545', '#FFB000', '#7193FF', '#FF6AC1', '#00D5AB',
 ];
 
 export function ModConsistency({ data, onSelectRule }: { data: ConsistencyData[]; onSelectRule?: (rule: string) => void }) {
@@ -69,7 +69,7 @@ export function ModConsistency({ data, onSelectRule }: { data: ConsistencyData[]
             <span
               className={`font-mono px-2 py-0.5 rounded ${
                 d.stdDev > 10
-                  ? 'bg-[#FF585B]/15 text-[#FF585B]'
+                  ? 'bg-[#CC4545]/15 text-[#CC4545]'
                   : d.stdDev > 5
                     ? 'bg-[#FFB000]/15 text-[#FFB000]'
                     : 'bg-[#46D160]/15 text-[#46D160]'
