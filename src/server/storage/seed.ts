@@ -66,30 +66,24 @@ export async function seedSampleData(): Promise<void> {
 
   await clearAllData(ruleNames);
 
-  const weights: number[] = [];
-  const overrideRates: number[] = [];
-  for (let i = 0; i < ruleNames.length; i++) {
-    weights.push(0.3 + Math.random() * 1.0);
-    // All rules get some overrides (5-12%), last rule gets high (30-38%)
-    overrideRates.push(i === ruleNames.length - 1 ? 0.30 + Math.random() * 0.08 : 0.05 + Math.random() * 0.07);
-  }
+  // Override rates: all rules 5-12%, last rule 30-38% (the "problem rule")
+  const overrideRates: number[] = ruleNames.map((_, i) =>
+    i === ruleNames.length - 1 ? 0.30 + Math.random() * 0.08 : 0.05 + Math.random() * 0.07
+  );
 
   const now = Date.now();
   const DAY = 86400000;
 
-  for (let d = 45; d >= 0; d--) {
+  // 14 days × 10 rules × 50% chance of 1 removal = ~70 total removals
+  for (let d = 14; d >= 0; d--) {
     const date = new Date(now - d * DAY);
     const monthKey = formatMonth(date);
 
     for (let ri = 0; ri < ruleNames.length; ri++) {
       const rule = ruleNames[ri];
-      const weight = weights[ri];
-      const removals = Math.max(1, Math.floor(Math.random() * 2 * weight) + 1);
-      const approvals = Math.floor(Math.random() * weight);
-      const overrides = Math.max(
-        d % 7 === 0 ? 1 : 0,
-        Math.floor(removals * overrideRates[ri] * (0.5 + Math.random()))
-      );
+      const removals = Math.random() < 0.5 ? 1 : 0;
+      const approvals = Math.random() < 0.2 ? 1 : 0;
+      const overrides = removals > 0 && Math.random() < overrideRates[ri] ? 1 : 0;
 
       if (removals > 0) {
         await redis.zIncrBy(keys.ruleRemovals(monthKey), rule, removals);
@@ -102,15 +96,14 @@ export async function seedSampleData(): Promise<void> {
       }
 
       for (const mod of SAMPLE_MODS) {
-        const modShare = ri === 0 && mod === 'mod_alpha' ? 2.5 : 1;
-        const modCount = Math.floor((removals / SAMPLE_MODS.length) * modShare * (0.5 + Math.random()));
-        if (modCount > 0) {
-          await redis.hIncrBy(keys.modRuleCounts(monthKey), `${mod}:${rule}`, modCount);
+        if (removals > 0 && Math.random() < 0.6) {
+          await redis.hIncrBy(keys.modRuleCounts(monthKey), `${mod}:${rule}`, 1);
         }
       }
     }
   }
 
+  // Annotations on the "problem rule" (last rule)
   const problemRule = ruleNames[ruleNames.length - 1];
   const problemAnnotations = [
     { mod: 'mod_alpha', text: 'This rule is too subjective — needs clearer criteria' },
@@ -138,16 +131,16 @@ export async function seedSampleData(): Promise<void> {
     }
   }
 
+  // Trend data: 13 weeks, small numbers per rule
   for (let w = 12; w >= 0; w--) {
     const weekDate = new Date(now - w * 7 * DAY);
     const weekLabel = getWeekLabel(weekDate);
 
     for (let ri = 0; ri < ruleNames.length; ri++) {
       const rule = ruleNames[ri];
-      const weight = weights[ri];
-      const removals = Math.floor(5 * weight + Math.random() * 4);
-      const approvals = Math.floor(1.5 * weight + Math.random() * 2);
-      const overrides = Math.max(1, Math.floor(removals * overrideRates[ri] * (0.5 + Math.random())));
+      const removals = Math.floor(2 + Math.random() * 4);
+      const approvals = Math.floor(Math.random() * 2);
+      const overrides = Math.random() < overrideRates[ri] * 3 ? Math.floor(1 + Math.random() * 2) : 0;
 
       await redis.zAdd(keys.trend(rule), {
         score: w,
