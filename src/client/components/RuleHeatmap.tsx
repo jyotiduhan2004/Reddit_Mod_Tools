@@ -12,6 +12,14 @@ function intensityColor(count: number, max: number): string {
 }
 
 export function RuleHeatmap({ cells, onSelectRule }: { cells: HeatmapCell[]; onSelectRule?: (rule: string) => void }) {
+  if (cells.length === 0) {
+    return (
+      <div className="text-center text-gray-500 dark:text-gray-400 py-8 text-sm">
+        No heatmap data yet — enforcement actions will appear here over time
+      </div>
+    );
+  }
+
   const periods = [...new Set(cells.map((c) => c.period))];
   const rules = [...new Set(cells.map((c) => c.rule))];
   const max = Math.max(...cells.map((c) => c.count), 1);

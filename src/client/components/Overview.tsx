@@ -66,9 +66,15 @@ export function Overview({ stats, onSelectRule }: { stats: OverviewStats; onSele
       <h3 className="text-sm font-semibold text-gray-600 dark:text-gray-400 mb-2">
         Top Enforced Rules (This Month)
       </h3>
-      <div className="h-48">
-        <Bar data={barData} options={barOptions} />
-      </div>
+      {stats.topRules.length > 0 ? (
+        <div className="h-48">
+          <Bar data={barData} options={barOptions} />
+        </div>
+      ) : (
+        <div className="text-center text-gray-500 dark:text-gray-400 py-8 text-sm">
+          No enforcement data yet — start moderating to see results
+        </div>
+      )}
 
       {stats.topRules.length > 0 && (
         <div className="mt-3 flex flex-wrap gap-2">

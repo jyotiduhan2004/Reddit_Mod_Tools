@@ -81,11 +81,13 @@ scheduler.post('/weekly-report', async (c) => {
       });
 
       try {
-        await reddit.sendPrivateMessage({
-          to: `/r/${subredditName}`,
-          subject: `RuleForge Weekly Report — ${dateStr}`,
-          text: body,
-        });
+        if (typeof reddit.sendPrivateMessage === 'function') {
+          await reddit.sendPrivateMessage({
+            to: `/r/${subredditName}`,
+            subject: `RuleForge Weekly Report — ${dateStr}`,
+            text: body,
+          });
+        }
       } catch (mailErr) {
         console.warn('Modmail send failed (non-critical):', mailErr);
       }

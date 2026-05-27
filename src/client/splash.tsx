@@ -7,6 +7,7 @@ import type { OverviewStats } from '../shared/api';
 
 function Splash() {
   const [stats, setStats] = useState<OverviewStats | null>(null);
+  const [loading, setLoading] = useState(true);
 
   useEffect(() => {
     fetch('/api/overview')
@@ -15,7 +16,8 @@ function Splash() {
         return r.json();
       })
       .then((data) => setStats(data))
-      .catch((err) => console.warn('Splash load error:', err));
+      .catch((err) => console.warn('Splash load error:', err))
+      .finally(() => setLoading(false));
   }, []);
 
   const healthScore = stats?.healthScore ?? 0;
@@ -32,6 +34,15 @@ function Splash() {
       : healthScore >= 60
         ? 'border-yellow-500'
         : 'border-red-500';
+
+  if (loading) {
+    return (
+      <div className="flex flex-col items-center justify-center min-h-screen gap-4 bg-white dark:bg-gray-900 p-4">
+        <div className="animate-spin w-6 h-6 border-3 border-orange-500 border-t-transparent rounded-full" />
+        <p className="text-sm text-gray-500 dark:text-gray-400">Loading RuleForge...</p>
+      </div>
+    );
+  }
 
   return (
     <div className="flex flex-col items-center justify-center min-h-screen gap-4 bg-white dark:bg-gray-900 p-4">

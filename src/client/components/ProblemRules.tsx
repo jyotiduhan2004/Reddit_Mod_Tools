@@ -52,16 +52,25 @@ function RuleCard({ rule, onSelectRule }: { rule: ProblemRule; onSelectRule?: (r
   const overridePct = Math.round(rule.overrideRate * 100);
   const hasSuggestion = rule.annotationCount >= 3;
 
+  const [discussionLoading, setDiscussionLoading] = useState(false);
+  const [discussionError, setDiscussionError] = useState(false);
+
   const handleDiscussion = async () => {
     try {
-      await fetch('/api/start-discussion', {
+      setDiscussionLoading(true);
+      setDiscussionError(false);
+      const res = await fetch('/api/start-discussion', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({ rule: rule.rule }),
       });
+      if (!res.ok) throw new Error('Failed');
       setDiscussionSent(true);
     } catch (err) {
       console.error('Discussion post failed:', err);
+      setDiscussionError(true);
+    } finally {
+      setDiscussionLoading(false);
     }
   };
 
@@ -135,14 +144,16 @@ function RuleCard({ rule, onSelectRule }: { rule: ProblemRule; onSelectRule?: (r
           </button>
           <button
             onClick={handleDiscussion}
-            disabled={discussionSent}
+            disabled={discussionSent || discussionLoading}
             className={`text-xs px-3 py-1 rounded transition-colors ${
               discussionSent
                 ? 'bg-green-100 text-green-700 dark:bg-green-900/40 dark:text-green-300'
-                : 'bg-blue-600 text-white hover:bg-blue-700'
+                : discussionError
+                  ? 'bg-red-100 text-red-700 dark:bg-red-900/40 dark:text-red-300'
+                  : 'bg-blue-600 text-white hover:bg-blue-700'
             }`}
           >
-            {discussionSent ? 'Discussion Posted' : 'Start Discussion'}
+            {discussionLoading ? 'Posting...' : discussionSent ? 'Discussion Posted' : discussionError ? 'Failed — Retry' : 'Start Discussion'}
           </button>
         </div>
       )}
