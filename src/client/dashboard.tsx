@@ -28,10 +28,10 @@ function Dashboard() {
 
   if (loading) {
     return (
-      <div className="flex items-center justify-center min-h-screen bg-white dark:bg-gray-900">
+      <div className="flex items-center justify-center min-h-screen bg-white dark:bg-[#1A1A1B]">
         <div className="text-center">
-          <div className="animate-spin w-8 h-8 border-4 border-orange-500 border-t-transparent rounded-full mx-auto mb-3" />
-          <p className="text-gray-500 dark:text-gray-400 text-sm">Loading RuleForge analytics...</p>
+          <div className="animate-spin w-8 h-8 border-4 border-[#FF4500] border-t-transparent rounded-full mx-auto mb-3" />
+          <p className="text-[#818384] text-sm">Loading RuleForge analytics...</p>
         </div>
       </div>
     );
@@ -39,8 +39,8 @@ function Dashboard() {
 
   if (error) {
     return (
-      <div className="flex items-center justify-center min-h-screen bg-white dark:bg-gray-900">
-        <div className="text-red-500 text-sm text-center p-4">
+      <div className="flex items-center justify-center min-h-screen bg-white dark:bg-[#1A1A1B]">
+        <div className="text-[#FF585B] text-sm text-center p-4">
           <p className="font-semibold mb-1">Error loading dashboard</p>
           <p className="text-xs">{error}</p>
         </div>
@@ -51,20 +51,20 @@ function Dashboard() {
   const problemCount = problems.filter((p) => p.flagged).length;
 
   return (
-    <div className="min-h-screen bg-white dark:bg-gray-900 text-gray-900 dark:text-white">
+    <div className="min-h-screen bg-white dark:bg-[#1A1A1B] text-gray-900 dark:text-[#D7DADC]">
       <div className="max-w-3xl mx-auto px-4 py-4">
         <div className="flex items-center gap-2 mb-4">
-          <div className="w-8 h-8 bg-orange-600 rounded-lg flex items-center justify-center text-white font-bold text-sm">
+          <div className="w-8 h-8 bg-[#FF4500] rounded-lg flex items-center justify-center text-white font-bold text-sm">
             RF
           </div>
           <div>
             <h1 className="text-lg font-bold">RuleForge</h1>
-            <p className="text-xs text-gray-500 dark:text-gray-400">Rule Enforcement Analytics</p>
+            <p className="text-xs text-[#818384]">Rule Enforcement Analytics</p>
           </div>
           <div className="ml-auto flex items-center gap-2">
             {untaggedCount > 0 && (
               <span
-                className="text-xs px-2 py-1 rounded-full bg-amber-100 dark:bg-amber-900/40 text-amber-700 dark:text-amber-300"
+                className="text-xs px-2 py-1 rounded-full bg-[#FF4500]/10 text-[#FF4500]"
                 title="Mod actions that couldn't be auto-matched to a rule"
               >
                 {untaggedCount} untagged
@@ -72,7 +72,7 @@ function Dashboard() {
             )}
             <button
               onClick={refresh}
-              className="text-xs px-3 py-1.5 rounded-full bg-gray-100 dark:bg-gray-800 text-gray-600 dark:text-gray-300 hover:bg-gray-200 dark:hover:bg-gray-700 transition-colors"
+              className="text-xs px-3 py-1.5 rounded-full bg-[#272729] text-[#D7DADC] hover:bg-[#343536] transition-colors"
             >
               Refresh
             </button>
@@ -80,7 +80,7 @@ function Dashboard() {
         </div>
 
         {milestone && (
-          <div className="bg-green-50 dark:bg-green-900/20 border border-green-200 dark:border-green-800 rounded-lg p-3 mb-3 text-sm text-green-700 dark:text-green-300 flex items-center gap-2">
+          <div className="bg-[#46D160]/10 border border-[#46D160]/30 rounded-lg p-3 mb-3 text-sm text-[#46D160] flex items-center gap-2">
             <span className="text-lg font-bold">+{milestone.delta}</span>
             <span>{milestone.message}</span>
           </div>
@@ -89,15 +89,15 @@ function Dashboard() {
         {selectedRule ? (
           autopsyLoading ? (
             <div className="text-center py-8">
-              <div className="animate-spin w-6 h-6 border-3 border-orange-500 border-t-transparent rounded-full mx-auto mb-2" />
-              <p className="text-sm text-gray-500">Loading rule autopsy...</p>
+              <div className="animate-spin w-6 h-6 border-3 border-[#FF4500] border-t-transparent rounded-full mx-auto mb-2" />
+              <p className="text-sm text-[#818384]">Loading rule autopsy...</p>
             </div>
           ) : autopsy ? (
             <RuleAutopsy data={autopsy} onBack={clearAutopsy} />
           ) : (
             <div className="text-center py-8">
-              <p className="text-sm text-red-500">Failed to load autopsy data</p>
-              <button onClick={clearAutopsy} className="text-xs text-gray-500 mt-2 underline">Go back</button>
+              <p className="text-sm text-[#FF585B]">Failed to load autopsy data</p>
+              <button onClick={clearAutopsy} className="text-xs text-[#818384] mt-2 underline">Go back</button>
             </div>
           )
         ) : (
@@ -115,7 +115,7 @@ function Dashboard() {
           </>
         )}
 
-        <footer className="mt-6 pt-4 border-t border-gray-200 dark:border-gray-700 text-center text-xs text-gray-400 dark:text-gray-500">
+        <footer className="mt-6 pt-4 border-t border-[#343536] text-center text-xs text-[#818384]">
           RuleForge v1.0 — Built for the Reddit Mod Tools Hackathon 2026
         </footer>
       </div>

@@ -13,12 +13,12 @@ import { Tooltip } from './Tooltip';
 ChartJS.register(CategoryScale, LinearScale, BarElement, ChartTooltip, Legend);
 
 const MOD_COLORS = [
-  '#d93900', '#2563eb', '#16a34a', '#9333ea', '#ca8a04', '#dc2626', '#0891b2', '#c026d3',
+  '#FF4500', '#24A0ED', '#46D160', '#FF585B', '#FFB000', '#7193FF', '#FF6AC1', '#00D5AB',
 ];
 
 export function ModConsistency({ data, onSelectRule }: { data: ConsistencyData[]; onSelectRule?: (rule: string) => void }) {
   if (data.length === 0) {
-    return <p className="text-gray-500 dark:text-gray-400 text-sm">No consistency data yet.</p>;
+    return <p className="text-[#818384] text-sm">No consistency data yet.</p>;
   }
 
   const allMods = [...new Set(data.flatMap((d) => d.mods.map((m) => m.name)))];
@@ -39,18 +39,18 @@ export function ModConsistency({ data, onSelectRule }: { data: ConsistencyData[]
     plugins: {
       legend: {
         position: 'bottom' as const,
-        labels: { color: '#9ca3af', font: { size: 10 }, boxWidth: 12 },
+        labels: { color: '#818384', font: { size: 10 }, boxWidth: 12 },
       },
     },
     scales: {
-      x: { grid: { display: false }, ticks: { color: '#9ca3af', font: { size: 10 } } },
-      y: { grid: { color: '#374151' }, ticks: { color: '#9ca3af' } },
+      x: { grid: { display: false }, ticks: { color: '#818384', font: { size: 10 } } },
+      y: { grid: { color: '#343536' }, ticks: { color: '#818384' } },
     },
   };
 
   return (
     <div>
-      <h3 className="text-sm font-semibold text-gray-600 dark:text-gray-400 mb-3">
+      <h3 className="text-sm font-semibold text-[#818384] mb-3">
         Mod Consistency — Actions Per Rule Per Mod (This Month)
       </h3>
       <div className="h-64">
@@ -61,7 +61,7 @@ export function ModConsistency({ data, onSelectRule }: { data: ConsistencyData[]
         {data.map((d) => (
           <div key={d.rule} className="flex items-center justify-between text-xs">
             <span
-              className="text-gray-700 dark:text-gray-300 truncate max-w-[200px] cursor-pointer hover:text-orange-600"
+              className="text-[#D7DADC] truncate max-w-[200px] cursor-pointer hover:text-[#FF4500]"
               onClick={() => onSelectRule?.(d.rule)}
             >
               {d.rule}
@@ -69,10 +69,10 @@ export function ModConsistency({ data, onSelectRule }: { data: ConsistencyData[]
             <span
               className={`font-mono px-2 py-0.5 rounded ${
                 d.stdDev > 10
-                  ? 'bg-red-100 dark:bg-red-900/40 text-red-700 dark:text-red-300'
+                  ? 'bg-[#FF585B]/15 text-[#FF585B]'
                   : d.stdDev > 5
-                    ? 'bg-yellow-100 dark:bg-yellow-900/40 text-yellow-700 dark:text-yellow-300'
-                    : 'bg-green-100 dark:bg-green-900/40 text-green-700 dark:text-green-300'
+                    ? 'bg-[#FFB000]/15 text-[#FFB000]'
+                    : 'bg-[#46D160]/15 text-[#46D160]'
               }`}
             >
               StdDev: {d.stdDev}

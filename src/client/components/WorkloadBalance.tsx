@@ -11,18 +11,18 @@ import { Tooltip } from './Tooltip';
 
 ChartJS.register(CategoryScale, LinearScale, BarElement, ChartTooltip);
 
-const BAR_COLORS = ['#ea580c', '#7c3aed', '#2563eb', '#059669', '#d97706', '#dc2626', '#0891b2', '#4f46e5'];
+const BAR_COLORS = ['#FF4500', '#24A0ED', '#46D160', '#FFB000', '#7193FF', '#FF6AC1', '#00D5AB', '#FF585B'];
 
 function burnoutBadge(pct: number) {
-  if (pct > 40) return { label: 'High Load', cls: 'bg-red-100 text-red-700 dark:bg-red-900/40 dark:text-red-300' };
-  if (pct > 30) return { label: 'Moderate', cls: 'bg-yellow-100 text-yellow-700 dark:bg-yellow-900/40 dark:text-yellow-300' };
-  return { label: 'Balanced', cls: 'bg-green-100 text-green-700 dark:bg-green-900/40 dark:text-green-300' };
+  if (pct > 40) return { label: 'High Load', cls: 'bg-[#FF585B]/15 text-[#FF585B]' };
+  if (pct > 30) return { label: 'Moderate', cls: 'bg-[#FFB000]/15 text-[#FFB000]' };
+  return { label: 'Balanced', cls: 'bg-[#46D160]/15 text-[#46D160]' };
 }
 
 export function WorkloadBalance({ data }: { data: WorkloadEntry[] }) {
   if (data.length === 0) {
     return (
-      <div className="text-center text-gray-500 dark:text-gray-400 py-8 text-sm">
+      <div className="text-center text-[#818384] py-8 text-sm">
         No workload data available yet
       </div>
     );
@@ -46,19 +46,19 @@ export function WorkloadBalance({ data }: { data: WorkloadEntry[] }) {
     maintainAspectRatio: false,
     plugins: { legend: { display: false } },
     scales: {
-      x: { grid: { display: false }, ticks: { color: '#9ca3af' } },
-      y: { grid: { display: false }, ticks: { color: '#9ca3af' } },
+      x: { grid: { display: false }, ticks: { color: '#818384' } },
+      y: { grid: { display: false }, ticks: { color: '#818384' } },
     },
   };
 
   return (
     <div>
-      <h3 className="text-sm font-semibold text-gray-600 dark:text-gray-400 mb-3">
+      <h3 className="text-sm font-semibold text-[#818384] mb-3">
         Mod Workload Distribution
         <Tooltip text="Shows how mod actions are distributed across your team. High load on one mod may indicate burnout risk." />
       </h3>
 
-      <div className="text-xs text-gray-500 dark:text-gray-400 mb-3">
+      <div className="text-xs text-[#818384] mb-3">
         {data.length} mods active this month
       </div>
 
@@ -72,21 +72,21 @@ export function WorkloadBalance({ data }: { data: WorkloadEntry[] }) {
           return (
             <div
               key={entry.mod}
-              className="flex items-center gap-3 p-3 rounded-lg border border-gray-200 dark:border-gray-700 bg-gray-50 dark:bg-gray-800/50"
+              className="flex items-center gap-3 p-3 rounded-lg border border-[#343536] bg-[#272729]"
             >
               <div
                 className="w-3 h-3 rounded-full flex-shrink-0"
                 style={{ backgroundColor: BAR_COLORS[i % BAR_COLORS.length] }}
               />
               <div className="flex-1 min-w-0">
-                <div className="font-medium text-sm text-gray-800 dark:text-gray-200">{entry.mod}</div>
-                <div className="text-xs text-gray-500 dark:text-gray-400">
+                <div className="font-medium text-sm text-[#D7DADC]">{entry.mod}</div>
+                <div className="text-xs text-[#818384]">
                   {entry.ruleBreakdown.slice(0, 3).map((r) => r.rule).join(', ')}
                 </div>
               </div>
               <div className="text-right flex-shrink-0">
-                <div className="text-sm font-bold text-gray-800 dark:text-gray-200">
-                  {entry.totalActions} <span className="font-normal text-xs text-gray-500">({entry.percentage}%)</span>
+                <div className="text-sm font-bold text-[#D7DADC]">
+                  {entry.totalActions} <span className="font-normal text-xs text-[#818384]">({entry.percentage}%)</span>
                 </div>
                 <span className={`text-[10px] px-1.5 py-0.5 rounded-full font-medium ${badge.cls}`}>
                   {badge.label}

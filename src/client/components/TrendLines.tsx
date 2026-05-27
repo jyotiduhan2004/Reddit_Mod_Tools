@@ -13,12 +13,12 @@ import type { TrendData } from '../../shared/api';
 ChartJS.register(CategoryScale, LinearScale, PointElement, LineElement, Tooltip, Legend);
 
 const COLORS = [
-  '#d93900', '#2563eb', '#16a34a', '#9333ea', '#ca8a04', '#dc2626', '#0891b2', '#c026d3',
+  '#FF4500', '#24A0ED', '#46D160', '#FF585B', '#FFB000', '#7193FF', '#FF6AC1', '#00D5AB',
 ];
 
 export function TrendLines({ data, onSelectRule }: { data: TrendData[]; onSelectRule?: (rule: string) => void }) {
   if (data.length === 0 || data[0].points.length === 0) {
-    return <p className="text-gray-500 dark:text-gray-400 text-sm">No trend data yet.</p>;
+    return <p className="text-[#818384] text-sm">No trend data yet.</p>;
   }
 
   const labels = data[0].points.map((p) => p.week);
@@ -42,18 +42,18 @@ export function TrendLines({ data, onSelectRule }: { data: TrendData[]; onSelect
     plugins: {
       legend: {
         position: 'bottom' as const,
-        labels: { color: '#9ca3af', font: { size: 10 }, boxWidth: 12 },
+        labels: { color: '#818384', font: { size: 10 }, boxWidth: 12 },
       },
     },
     scales: {
-      x: { grid: { display: false }, ticks: { color: '#9ca3af', font: { size: 10 } } },
-      y: { grid: { color: '#374151' }, ticks: { color: '#9ca3af' } },
+      x: { grid: { display: false }, ticks: { color: '#818384', font: { size: 10 } } },
+      y: { grid: { color: '#343536' }, ticks: { color: '#818384' } },
     },
   };
 
   return (
     <div>
-      <h3 className="text-sm font-semibold text-gray-600 dark:text-gray-400 mb-3">
+      <h3 className="text-sm font-semibold text-[#818384] mb-3">
         Enforcement Trends — Removals Per Rule (Last 12 Weeks)
       </h3>
       <div className="h-72">

@@ -25,9 +25,9 @@ function StatCard({ label, value, color, tooltip }: { label: string; value: stri
 }
 
 function healthColor(score: number): string {
-  if (score >= 80) return 'bg-green-100 dark:bg-green-900/40 text-green-800 dark:text-green-300';
-  if (score >= 60) return 'bg-yellow-100 dark:bg-yellow-900/40 text-yellow-800 dark:text-yellow-300';
-  return 'bg-red-100 dark:bg-red-900/40 text-red-800 dark:text-red-300';
+  if (score >= 80) return 'bg-[#46D160]/15 text-[#46D160]';
+  if (score >= 60) return 'bg-[#FFB000]/15 text-[#FFB000]';
+  return 'bg-[#FF585B]/15 text-[#FF585B]';
 }
 
 export function Overview({ stats, onSelectRule }: { stats: OverviewStats; onSelectRule?: (rule: string) => void }) {
@@ -37,7 +37,7 @@ export function Overview({ stats, onSelectRule }: { stats: OverviewStats; onSele
       {
         label: 'Removals',
         data: stats.topRules.map((r) => r.count),
-        backgroundColor: '#d93900',
+        backgroundColor: '#FF4500',
         borderRadius: 4,
       },
     ],
@@ -49,8 +49,8 @@ export function Overview({ stats, onSelectRule }: { stats: OverviewStats; onSele
     maintainAspectRatio: false,
     plugins: { legend: { display: false } },
     scales: {
-      x: { grid: { display: false }, ticks: { color: '#9ca3af' } },
-      y: { grid: { display: false }, ticks: { color: '#9ca3af', font: { size: 11 } } },
+      x: { grid: { display: false }, ticks: { color: '#818384' } },
+      y: { grid: { display: false }, ticks: { color: '#818384', font: { size: 11 } } },
     },
   };
 
@@ -58,12 +58,12 @@ export function Overview({ stats, onSelectRule }: { stats: OverviewStats; onSele
     <div>
       <div className="grid grid-cols-2 gap-3 mb-4">
         <StatCard label="Health Score" value={stats.healthScore} color={healthColor(stats.healthScore)} tooltip="0-100 score based on overall override rate. Higher is better." />
-        <StatCard label="Total Actions" value={stats.totalActions} color="bg-blue-100 dark:bg-blue-900/40 text-blue-800 dark:text-blue-300" tooltip="Total removals + approvals this month" />
-        <StatCard label="Removals" value={stats.totalRemovals} color="bg-orange-100 dark:bg-orange-900/40 text-orange-800 dark:text-orange-300" tooltip="Content removed by mods under any rule" />
-        <StatCard label="Overrides" value={stats.totalOverrides} color="bg-purple-100 dark:bg-purple-900/40 text-purple-800 dark:text-purple-300" tooltip="Removals later approved by another mod" />
+        <StatCard label="Total Actions" value={stats.totalActions} color="bg-[#24A0ED]/15 text-[#24A0ED]" tooltip="Total removals + approvals this month" />
+        <StatCard label="Removals" value={stats.totalRemovals} color="bg-[#FF4500]/15 text-[#FF4500]" tooltip="Content removed by mods under any rule" />
+        <StatCard label="Overrides" value={stats.totalOverrides} color="bg-[#FF585B]/15 text-[#FF585B]" tooltip="Removals later approved by another mod" />
       </div>
 
-      <h3 className="text-sm font-semibold text-gray-600 dark:text-gray-400 mb-2">
+      <h3 className="text-sm font-semibold text-[#818384] mb-2">
         Top Enforced Rules (This Month)
       </h3>
       {stats.topRules.length > 0 ? (
@@ -71,7 +71,7 @@ export function Overview({ stats, onSelectRule }: { stats: OverviewStats; onSele
           <Bar data={barData} options={barOptions} />
         </div>
       ) : (
-        <div className="text-center text-gray-500 dark:text-gray-400 py-8 text-sm">
+        <div className="text-center text-[#818384] py-8 text-sm">
           No enforcement data yet — start moderating to see results
         </div>
       )}
@@ -82,7 +82,7 @@ export function Overview({ stats, onSelectRule }: { stats: OverviewStats; onSele
             <span
               key={r.rule}
               onClick={() => onSelectRule?.(r.rule)}
-              className="text-xs px-2 py-1 rounded-full bg-gray-100 dark:bg-gray-800 text-gray-600 dark:text-gray-300 cursor-pointer hover:bg-orange-100 dark:hover:bg-orange-900/30 hover:text-orange-600 transition-colors"
+              className="text-xs px-2 py-1 rounded-full bg-[#272729] text-[#D7DADC] cursor-pointer hover:bg-[#FF4500]/20 hover:text-[#FF4500] transition-colors"
             >
               {r.rule}
             </span>

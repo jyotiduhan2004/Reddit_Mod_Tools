@@ -31,23 +31,22 @@ export async function seedSampleData(): Promise<void> {
   const weights: number[] = [];
   const overrideRates: number[] = [];
   for (let i = 0; i < ruleNames.length; i++) {
-    weights.push(0.5 + Math.random() * 2);
-    overrideRates.push(i === ruleNames.length - 1 ? 0.35 : 0.03 + Math.random() * 0.12);
+    weights.push(0.3 + Math.random() * 1.2);
+    overrideRates.push(i === ruleNames.length - 1 ? 0.35 : 0.02 + Math.random() * 0.08);
   }
-  // Make the last rule the "problem rule" with high override rate
 
   const now = Date.now();
   const DAY = 86400000;
 
-  for (let d = 90; d >= 0; d--) {
+  for (let d = 45; d >= 0; d--) {
     const date = new Date(now - d * DAY);
     const monthKey = formatMonth(date);
 
     for (let ri = 0; ri < ruleNames.length; ri++) {
       const rule = ruleNames[ri];
       const weight = weights[ri];
-      const removals = Math.floor(Math.random() * 8 * weight) + 1;
-      const approvals = Math.floor(Math.random() * 3 * weight);
+      const removals = Math.floor(Math.random() * 3 * weight) + 1;
+      const approvals = Math.floor(Math.random() * 1.5 * weight);
       const overrides = Math.floor(removals * overrideRates[ri] * (0.5 + Math.random()));
 
       if (removals > 0) {
@@ -70,13 +69,11 @@ export async function seedSampleData(): Promise<void> {
     }
   }
 
-  // Annotations on the "problem rule" (last rule)
   const problemRule = ruleNames[ruleNames.length - 1];
   const problemAnnotations = [
     { mod: 'mod_alpha', text: 'This rule is too subjective — needs clearer criteria' },
     { mod: 'mod_beta', text: 'Mods disagree on how to enforce this one' },
     { mod: 'mod_gamma', text: 'Users keep appealing removals under this rule' },
-    { mod: 'mod_delta', text: 'Should we split this into more specific rules?' },
   ];
   for (let i = 0; i < problemAnnotations.length; i++) {
     await redis.zAdd(keys.annotations(problemRule), {
@@ -85,13 +82,11 @@ export async function seedSampleData(): Promise<void> {
     });
   }
 
-  // Annotations on the first rule
   if (ruleNames.length > 1) {
     const firstRule = ruleNames[0];
     const firstAnnotations = [
       { mod: 'mod_beta', text: 'Where is the line for this rule?' },
-      { mod: 'mod_gamma', text: 'Gets flagged too often — consider adding examples' },
-      { mod: 'mod_alpha', text: 'Consider adding examples of what IS and IS NOT a violation' },
+      { mod: 'mod_gamma', text: 'Consider adding examples of what counts as a violation' },
     ];
     for (let i = 0; i < firstAnnotations.length; i++) {
       await redis.zAdd(keys.annotations(firstRule), {
@@ -101,7 +96,6 @@ export async function seedSampleData(): Promise<void> {
     }
   }
 
-  // Trend data
   for (let w = 12; w >= 0; w--) {
     const weekDate = new Date(now - w * 7 * DAY);
     const weekLabel = getWeekLabel(weekDate);
@@ -109,8 +103,8 @@ export async function seedSampleData(): Promise<void> {
     for (let ri = 0; ri < ruleNames.length; ri++) {
       const rule = ruleNames[ri];
       const weight = weights[ri];
-      const removals = Math.floor(20 * weight + Math.random() * 15);
-      const approvals = Math.floor(5 * weight + Math.random() * 5);
+      const removals = Math.floor(8 * weight + Math.random() * 6);
+      const approvals = Math.floor(2 * weight + Math.random() * 3);
       const overrides = Math.floor(removals * overrideRates[ri] * (0.5 + Math.random()));
 
       await redis.zAdd(keys.trend(rule), {
@@ -122,15 +116,15 @@ export async function seedSampleData(): Promise<void> {
 
   await runAggregation(ruleNames);
 
-  await redis.set(keys.healthPrev(), '78');
+  await redis.set(keys.healthPrev(), '82');
   await redis.set(
     keys.milestone(),
-    JSON.stringify({ message: 'Health score improved from 78 to 84!', ts: now, delta: 6 })
+    JSON.stringify({ message: 'Health score improved from 82 to 88!', ts: now, delta: 6 })
   );
   await redis.expire(keys.milestone(), 604800);
 
   const monthKey = formatMonth(new Date(now));
-  await redis.hSet(keys.untagged(monthKey), { count: '14' });
+  await redis.hSet(keys.untagged(monthKey), { count: '5' });
 
   await redis.set(keys.seeded(), '1');
   console.log('RuleForge: Sample data seeded successfully');
