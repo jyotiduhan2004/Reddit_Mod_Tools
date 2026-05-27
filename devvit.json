@@ -1,0 +1,75 @@
+{
+  "$schema": "https://developers.reddit.com/schema/config-file.v1.json",
+  "name": "ruleforgedemo",
+  "post": {
+    "dir": "dist/client",
+    "entrypoints": {
+      "default": {
+        "inline": true,
+        "entry": "splash.html"
+      },
+      "dashboard": {
+        "entry": "dashboard.html"
+      }
+    }
+  },
+  "server": {
+    "dir": "dist/server",
+    "entry": "index.cjs"
+  },
+  "menu": {
+    "items": [
+      {
+        "label": "RuleForge: Tag Rule (Post)",
+        "description": "Tag which rule this post enforces",
+        "location": "post",
+        "forUserType": "moderator",
+        "endpoint": "/internal/menu/tag-post"
+      },
+      {
+        "label": "RuleForge: Tag Rule (Comment)",
+        "description": "Tag which rule this comment enforces",
+        "location": "comment",
+        "forUserType": "moderator",
+        "endpoint": "/internal/menu/tag-comment"
+      },
+      {
+        "label": "RuleForge: Open Dashboard",
+        "description": "Open the RuleForge analytics dashboard",
+        "location": "subreddit",
+        "forUserType": "moderator",
+        "endpoint": "/internal/menu/open-dashboard"
+      },
+      {
+        "label": "RuleForge: Reset & Reseed Data",
+        "description": "Clear existing data and reseed with fresh sample data",
+        "location": "subreddit",
+        "forUserType": "moderator",
+        "endpoint": "/internal/menu/reseed"
+      }
+    ]
+  },
+  "forms": {
+    "tagRuleForm": "/internal/form/tag-rule-submit"
+  },
+  "triggers": {
+    "onAppInstall": "/internal/triggers/on-app-install",
+    "onModAction": "/internal/triggers/on-mod-action"
+  },
+  "scheduler": {
+    "tasks": {
+      "daily-aggregation": {
+        "endpoint": "/internal/scheduler/daily-aggregation",
+        "cron": "0 3 * * *"
+      },
+      "weekly-report": {
+        "endpoint": "/internal/scheduler/weekly-report",
+        "cron": "0 9 * * 1"
+      }
+    }
+  },
+  "scripts": {
+    "dev": "vite build --watch",
+    "build": "vite build"
+  }
+}
