@@ -20,7 +20,7 @@
   "dependencies": {
     "@devvit/start": "0.12.24",
     "@devvit/web": "0.12.24",
-    "@hono/node-server": "2.0.3",
+    "@hono/node-server": "2.0.5",
     "chart.js": "^4.5.1",
     "chartjs-chart-matrix": "^3.0.4",
     "devvit": "0.12.24",
